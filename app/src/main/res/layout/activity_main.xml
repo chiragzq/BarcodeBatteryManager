@@ -7,8 +7,13 @@
 
     <Button
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:text="Click me"
+        android:layout_height="75dp"
+        android:text="Scan Battery"
+        android:onClick="openScannerView"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:text="View Scans"
         android:onClick="openScannerView"/>
 
 </LinearLayout>

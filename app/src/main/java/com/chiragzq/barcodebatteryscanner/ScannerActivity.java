@@ -1,10 +1,10 @@
 package com.chiragzq.barcodebatteryscanner;
 
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
+import android.util.Log;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -40,18 +40,27 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 
     @Override
     public void handleResult(Result rawResult) {
-        Toast.makeText(this, "Contents = " + rawResult.getText() +
-                ", Format = " + rawResult.getBarcodeFormat(), Toast.LENGTH_SHORT).show();
-        // Note:
-        // * Wait 2 seconds to resume the preview.
-        // * On older devices continuously stopping and resuming camera preview can result in freezing the app.
-        // * I don't know why this is the case but I don't have the time to figure out.
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mScannerView.resumeCameraPreview(ScannerActivity.this);
-            }
-        }, 2000);
+        String barcodeValue = rawResult.getText();
+        Log.d("BARCODE VALUE", barcodeValue);
+
+        Intent intent = new Intent();
+        intent.putExtra("BARCODE_DATA", barcodeValue);
+        setResult(RESULT_OK, intent);
+        finish();
+
+//        System.out.println(rawResult.);
+//        Toast.makeText(this, "Contents = " + rawResult.getText() +
+//                ", Format = " + rawResult.getBarcodeFormat(), Toast.LENGTH_SHORT).show();
+//        // Note:
+//        // * Wait 2 seconds to resume the preview.
+//        // * On older devices continuously stopping and resuming camera preview can result in freezing the app.
+//        // * I don't know why this is the case but I don't have the time to figure out.
+//        Handler handler = new Handler();
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                mScannerView.resumeCameraPreview(ScannerActivity.this);
+//            }
+//        }, 500);
     }
 }
