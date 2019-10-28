@@ -3,10 +3,12 @@ package com.chiragzq.barcodebatteryscanner;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,6 +17,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(state);
 
         setContentView(R.layout.activity_main);
+
+        Toolbar myToolbar = findViewById(R.id.main_toolbar);
+        setSupportActionBar(myToolbar);
     }
 
     public void openScannerView(View v) {
@@ -32,7 +37,13 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Scanned Battery: " + battery, Toast.LENGTH_LONG).show();
 
             DataManager.getInstance().addScan(battery, getApplicationContext());
+            System.out.println(DataManager.getInstance().getScans(getApplicationContext()));
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.empty_menu, menu);
+        return true;
+    }
 }

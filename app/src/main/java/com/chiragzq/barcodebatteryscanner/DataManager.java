@@ -24,7 +24,7 @@ public class DataManager {
 
     public void addScan(String battery, Context context) {
         try {
-            FileOutputStream out = context.openFileOutput(battery, Context.MODE_APPEND);
+            FileOutputStream out = context.openFileOutput(FILE_NAME, Context.MODE_APPEND);
             out.write((battery + "," + new Date().getTime() + "\n").getBytes());
             out.close();
         } catch (IOException e) {
@@ -47,8 +47,10 @@ public class DataManager {
             }
             return ret;
         } catch(FileNotFoundException e) {
+            e.printStackTrace();
             return new ArrayList<>();
         } catch(IOException e) {
+            e.printStackTrace();
             return new ArrayList<>();
         }
     }

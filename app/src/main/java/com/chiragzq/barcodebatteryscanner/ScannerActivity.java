@@ -2,11 +2,15 @@ package com.chiragzq.barcodebatteryscanner;
 
 
 import android.content.Intent;
+import android.hardware.Camera;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.ViewGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.zxing.Result;
 
@@ -15,6 +19,7 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class ScannerActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
     private ZXingScannerView mScannerView;
+    private int currentCameraId;
 
     @Override
     public void onCreate(Bundle state) {
@@ -23,19 +28,31 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
         ViewGroup contentFrame = (ViewGroup) findViewById(R.id.content_frame);
         mScannerView = new ZXingScannerView(this);
         contentFrame.addView(mScannerView);
+
+        Toolbar myToolbar = findViewById(R.id.scanner_toolbar);
+        setSupportActionBar(myToolbar);
+
+        currentCameraId = 0;
     }
 
     @Override
     public void onResume() {
         super.onResume();
         mScannerView.setResultHandler(this);
-        mScannerView.startCamera();
+        mScannerView.startCamera(currentCameraId);
     }
 
     @Override
     public void onPause() {
         super.onPause();
         mScannerView.stopCamera();
+    }
+
+    public void changeCamera(MenuItem item) {
+        int numCameras = Camera.getNumberOfCameras();
+        currentCameraId = ++currentCameraId % numCameras;
+        mScannerView.stopCamera();
+        mScannerView.startCamera(currentCameraId);
     }
 
     @Override
@@ -62,5 +79,11 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 //                mScannerView.resumeCameraPreview(ScannerActivity.this);
 //            }
 //        }, 500);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.change_camera_menu, menu);
+        return true;
     }
 }
