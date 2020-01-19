@@ -22,8 +22,13 @@
             android:name=".ScannerActivity"
             android:label="Scan Battery">
         </activity>
-
+        <activity
+            android:name=".ViewDataActivity"
+            android:label="Battery Scan History">
+        </activity>
+        <service android:name=".SyncBatteryService" />
     </application>
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
 </manifest>

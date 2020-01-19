@@ -20,11 +20,17 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar myToolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(myToolbar);
+        startService(new Intent(this, SyncBatteryService.class));
     }
 
     public void openScannerView(View v) {
         Intent intent = new Intent(this, ScannerActivity.class);
         startActivityForResult(intent, 1);
+    }
+
+    public void openDataView(View v) {
+        Intent intent = new Intent(this, ViewDataActivity.class);
+        startActivityForResult(intent, 2);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -33,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
             String battery = data.getStringExtra("BARCODE_DATA");
             Log.d("BARCODE DATA RECEIVED", data.getStringExtra("BARCODE_DATA"));
 
-            //TODO why doesn't this work
             Toast.makeText(getApplicationContext(), "Scanned Battery: " + battery, Toast.LENGTH_LONG).show();
 
             DataManager.getInstance().addScan(battery, getApplicationContext());

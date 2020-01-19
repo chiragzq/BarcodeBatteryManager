@@ -1,26 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/linear_layout"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
+    android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/main_toolbar"
+        android:id="@+id/scanner_toolbar"
         android:minHeight="?attr/actionBarSize"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary">
     </androidx.appcompat.widget.Toolbar>
 
-    <Button
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:text="Scan Battery"
-        android:onClick="openScannerView"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:text="View Scans"
-        android:onClick="openDataView"/>
+        android:layout_height="wrap_content"
+        android:id="@+id/battery_listview">
+
+    </ListView>
 </LinearLayout>
